@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# GitLab API URL
+API_URL="https://your-gitlab-instance/api/v4"
+
+# Personal Access Token
+ACCESS_TOKEN="<your_access_token>"
+
+# File containing user IDs or usernames
+USERS_FILE="user_list.txt"
+
+# Iterate through the file and delete each user
+while IFS= read -r user
+do
+    # Send DELETE request
+    curl --request DELETE --header "PRIVATE-TOKEN: $ACCESS_TOKEN" "$API_URL/admin/users/$user"
+
+    # Add a delay if needed to avoid rate limiting
+    sleep 1
+done < "$USERS_FILE"
